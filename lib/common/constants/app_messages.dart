@@ -1,11 +1,14 @@
-import 'package:flutter/material.dart';
-
 class ValidationMessages {
+    static const String invalidName = 'Invalid name';
+  static const String nameCharacterLength = 'Name must be at least 3 characters long';
   static const String requiredField = 'This field is required';
   static const String invalidEmail = 'Invalid email';
+  static const String invalidEmailMessage = 'Invalid email address';
+  static const String passwordRequired = 'Password is required';
   static const String invalidPassword = 'Invalid password';
+  static const String passwordConfirmRequired = 'Please confirm your password';
+  static const String invalidPasswordLength = 'Password must be at least 6 characters long';
   static const String invalidPasswordDoNotMatch = 'Passwords do not match';
-  static const String invalidName = 'Invalid name';
 }
 
 class NotificationMessages {

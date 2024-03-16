@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+// Constants
+import 'package:flutter_cms_business_manager/common/constants/colors.dart';
+
 // Provider
 import 'package:provider/provider.dart';
 import 'package:flutter_cms_business_manager/services/providers/auth_provider.dart';
@@ -35,7 +38,7 @@ class MyApp extends StatelessWidget {
         title: 'Flutter CMS Business Manager',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: AppColors.primaryColor,
         ),
         onGenerateRoute: AppRoutes.generateRoute,
         home: const Splash(),

@@ -13,9 +13,11 @@ class UserProvider extends ChangeNotifier {
 
   String url = Api.baseUrl;
 
-  Future<void> updateEmail(String email) async {}
+  Future<void> updateName(String name) async {}
 
-  Future<void> updatePassword(String password) async {}
+  Future<void> updateEmail(String email, String newEmail) async {}
+
+  Future<void> updatePassword(String newPassword, String confirmNewPassword) async {}
 
   Future<void> deleteUser() async {}
 }
