@@ -10,6 +10,17 @@ class UpdatePassword extends StatefulWidget {
 class _UpdatePasswordState extends State<UpdatePassword> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        title: const Text(
+          'Update Password',
+          style: TextStyle(
+            fontSize: 20,
+          ),
+        ),
+      ),
+    );
   }
 }
