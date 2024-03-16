@@ -2,32 +2,37 @@ import 'package:flutter/material.dart';
 
 // Constants
 import 'package:flutter_cms_business_manager/common/constants/colors.dart';
-import 'package:flutter_cms_business_manager/common/widgets/custom_button.dart';
+
+// Utils
+import 'package:flutter_cms_business_manager/common/utils/validators.dart';
 
 // Widgets
 import 'package:flutter_cms_business_manager/common/widgets/custom_textfield.dart';
+import 'package:flutter_cms_business_manager/common/widgets/snack_bar.dart';
+import 'package:flutter_cms_business_manager/common/widgets/custom_button.dart';
 
 // Screens
 import 'package:flutter_cms_business_manager/screens/auth/login.dart';
 
-class Register extends StatefulWidget {
-  const Register({super.key});
+// Provider
+import 'package:provider/provider.dart';
+import 'package:flutter_cms_business_manager/services/providers/auth_provider.dart';
 
-  @override
-  State<Register> createState() => _RegisterState();
-}
-
-class _RegisterState extends State<Register> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
+class Register extends StatelessWidget {
+  Register({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+    final TextEditingController nameController = TextEditingController();
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+    final TextEditingController confirmPasswordController =
+        TextEditingController();
+
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
     return Scaffold(
       appBar: AppBar(
           title: const Text('Welcome to Flutter'),
@@ -37,72 +42,114 @@ class _RegisterState extends State<Register> {
             color: AppColors.black,
             fontSize: 20,
           )),
-      body: Form(
-        key: _formKey,
-        child: Column(
-          children: <Widget>[
-            const Padding(
-              padding: EdgeInsets.all(24.0),
-              child: Center(
-                child: FlutterLogo(
-                  size: 60,
-                  textColor: Colors.blue,
+      body: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: <Widget>[
+              const Padding(
+                padding: EdgeInsets.all(24.0),
+                child: Center(
+                  child: FlutterLogo(
+                    size: 60,
+                    textColor: Colors.blue,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 32),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: CustomTextField(
-                controller: nameController,
-                hintText: 'Enter your name',
+              const SizedBox(height: 32),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: CustomTextField(
+                  controller: nameController,
+                  hintText: 'Enter your name',
+                  validator: (value) =>
+                      Validators.validateName(nameController.text),
+                ),
               ),
-            ),
-            const SizedBox(height: 32),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: CustomTextField(
-                controller: nameController,
-                hintText: 'Enter your email',
+              const SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: CustomTextField(
+                  controller: emailController,
+                  hintText: 'Enter your email',
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) =>
+                      Validators.validateEmail(emailController.text),
+                ),
               ),
-            ),
-            const SizedBox(height: 32),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: CustomTextField(
-                controller: nameController,
-                hintText: 'Enter your password',
+              const SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: CustomTextField(
+                  controller: passwordController,
+                  hintText: 'Enter your password',
+                  obscureText: true,
+                  validator: (value) =>
+                      Validators.validatePassword(passwordController.text),
+                ),
               ),
-            ),
-            const SizedBox(height: 32),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: CustomTextField(
-                controller: nameController,
-                hintText: 'Confirm your password',
+              const SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: CustomTextField(
+                  controller: confirmPasswordController,
+                  hintText: 'Confirm your password',
+                  obscureText: true,
+                  validator: (value) => Validators.confirmPasswordValidator(
+                    passwordController.text,
+                    confirmPasswordController.text,
+                  ),
+                ),
               ),
-            ),
-            const SizedBox(height: 32),
-            CustomButton(
-              onPressed: () {
-                print('Button pressed!');
-              },
-              text: 'Login',
-              color: AppColors.primaryColor,
-              textColor: AppColors.white,
-            ),
-            const SizedBox(height: 16),
-            TextButton(
-              onPressed: () {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => const Login()));
-              },
-              child: const Text(
-                'Already have an account? Login',
-                style: TextStyle(color: AppColors.primaryColor),
+              const SizedBox(height: 32),
+              CustomButton(
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    try {
+                      await authProvider.createUser(
+                        nameController.text,
+                        emailController.text,
+                        passwordController.text,
+                      );
+
+                      CustomSnackBar.show(context, 'User created successfully',
+                          backgroundColor: AppColors.lightGreen,
+                          textColor: AppColors.white);
+
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Login(),
+                        ),
+                      );
+                    } catch (e) {
+                      CustomSnackBar.show(context, 'Error creating user',
+                          backgroundColor: AppColors.darkGrey,
+                          textColor: AppColors.darkRed);
+                    }
+                  }
+                },
+                text: 'Register',
+                color: AppColors.primaryColor,
+                textColor: AppColors.white,
               ),
-            ),
-          ],
+              const SizedBox(height: 16),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Login(),
+                    ),
+                  );
+                },
+                child: const Text(
+                  'Already have an account? Login',
+                  style: TextStyle(color: AppColors.primaryColor),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

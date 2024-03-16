@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 class CustomTextField extends StatelessWidget {
   final String hintText;
   final TextEditingController controller;
@@ -8,9 +9,10 @@ class CustomTextField extends StatelessWidget {
   final Function(String)? onSubmitted;
   final Function(String)? onChanged;
   final Color borderColor;
+  final FormFieldValidator<String>? validator;
 
   const CustomTextField({
-    super.key,
+    Key? key,
     required this.hintText,
     required this.controller,
     this.keyboardType = TextInputType.text,
@@ -19,17 +21,18 @@ class CustomTextField extends StatelessWidget {
     this.onSubmitted,
     this.onChanged,
     this.borderColor = Colors.blue, // Default color is blue
-  });
+    this.validator,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
       obscureText: obscureText,
       textInputAction: textInputAction,
-      onSubmitted: onSubmitted,
       onChanged: onChanged,
+      validator: validator,
       decoration: InputDecoration(
         hintText: hintText,
         border: OutlineInputBorder(

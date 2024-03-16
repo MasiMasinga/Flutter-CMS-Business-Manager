@@ -3,27 +3,33 @@ import 'package:flutter/material.dart';
 // Constants
 import 'package:flutter_cms_business_manager/common/constants/colors.dart';
 
+// Utils
+import 'package:flutter_cms_business_manager/common/utils/validators.dart';
+
 // Widgets
 import 'package:flutter_cms_business_manager/common/widgets/custom_button.dart';
 import 'package:flutter_cms_business_manager/common/widgets/custom_textfield.dart';
+import 'package:flutter_cms_business_manager/common/widgets/snack_bar.dart';
 
 // Screens
 import 'package:flutter_cms_business_manager/screens/auth/login.dart';
+import 'package:flutter_cms_business_manager/screens/auth/reset_password.dart';
 
-class ForgotPassword extends StatefulWidget {
-  const ForgotPassword({super.key});
+// Provider
+import 'package:provider/provider.dart';
+import 'package:flutter_cms_business_manager/services/providers/auth_provider.dart';
 
-  @override
-  State<ForgotPassword> createState() => _ForgotPasswordState();
-}
-
-class _ForgotPasswordState extends State<ForgotPassword> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  final TextEditingController emailController = TextEditingController();
+class ForgotPassword extends StatelessWidget {
+  ForgotPassword({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+    final TextEditingController emailController = TextEditingController();
+
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -37,8 +43,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => const Login()));
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => Login()));
           },
         ),
         backgroundColor: AppColors.primaryColor,
@@ -66,12 +72,36 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               child: CustomTextField(
                 controller: emailController,
                 hintText: 'Enter your email',
+                keyboardType: TextInputType.emailAddress,
+                validator: (value) => Validators.validateEmail(
+                  emailController.text,
+                ),
               ),
             ),
             const SizedBox(height: 32),
             CustomButton(
-              onPressed: () {
-                print('Button pressed!');
+              onPressed: () async {
+                if (_formKey.currentState!.validate()) {
+                  try {
+                    await authProvider.forgotPassword(emailController.text);
+                    CustomSnackBar.show(
+                        context, 'Password reset link sent to your email',
+                        backgroundColor: AppColors.lightGreen,
+                        textColor: AppColors.white);
+
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ResetPassword(),
+                      ),
+                    );
+                  } catch (error) {
+                    CustomSnackBar.show(context,
+                        'Error sending password reset link. Try again.',
+                        backgroundColor: AppColors.lightRed,
+                        textColor: AppColors.white);
+                  }
+                }
               },
               text: 'Reset Password',
               color: AppColors.primaryColor,
@@ -80,8 +110,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             const SizedBox(height: 16), // Add some space between the buttons
             TextButton(
               onPressed: () {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => const Login()));
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Login(),
+                  ),
+                );
               },
               child: const Text(
                 'Remember your password? Login here.',

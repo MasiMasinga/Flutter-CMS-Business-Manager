@@ -17,21 +17,21 @@ class AppRoutes {
       case '/':
         return MaterialPageRoute(builder: (_) => const Splash());
       case '/login':
-        return MaterialPageRoute(builder: (_) => const Login());
+        return MaterialPageRoute(builder: (_) => Login());
       case '/register':
-        return MaterialPageRoute(builder: (_) => const Register());
+        return MaterialPageRoute(builder: (_) => Register());
       case '/reset-password':
-        return MaterialPageRoute(builder: (_) => const ResetPassword());
+        return MaterialPageRoute(builder: (_) => ResetPassword());
       case '/forgot-password':
-        return MaterialPageRoute(builder: (_) => const ForgotPassword());
+        return MaterialPageRoute(builder: (_) => ForgotPassword());
       case '/home':
         return MaterialPageRoute(builder: (_) => const Home());
       case '/settings':
         return MaterialPageRoute(builder: (_) => const Settings());
       case '/update-email':
-        return MaterialPageRoute(builder: (_) => const UpdateEmail());
+        return MaterialPageRoute(builder: (_) => UpdateEmail());
       case '/update-password':
-        return MaterialPageRoute(builder: (_) => const UpdatePassword());
+        return MaterialPageRoute(builder: (_) => UpdatePassword());
       default:
         throw ('This route name does not exit');
     }
