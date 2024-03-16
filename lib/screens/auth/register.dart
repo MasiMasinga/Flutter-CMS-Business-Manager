@@ -12,6 +12,17 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        title: const Text(
+          'Register',
+          style: TextStyle(
+            fontSize: 20,
+          ),
+        ),
+      ),
+    );
   }
 }
