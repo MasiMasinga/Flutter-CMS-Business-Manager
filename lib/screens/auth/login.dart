@@ -93,7 +93,7 @@ class _LoginState extends State<Login> {
               color: AppColors.primaryColor,
               textColor: AppColors.white,
             ),
-            const SizedBox(height: 16), // Add some space between the buttons
+            const SizedBox(height: 16),
             TextButton(
               onPressed: () {
                 Navigator.pushReplacement(context,
