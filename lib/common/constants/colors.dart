@@ -4,5 +4,6 @@ class AppColors {
   static const primaryColor = Colors.blue;
   static const secondaryColor = Colors.green;
   static const errorColor = Colors.red;
-  static const backgroundColor = Colors.white;
+  static const white = Colors.white;
+  static const black = Colors.black;
 }
