@@ -96,7 +96,6 @@ class _CreateDepartmentState extends State<CreateDepartment> {
                           ),
                         ),
                       );
-
                     } catch (e) {
                       CustomSnackBar.show(context, 'Error creating department',
                           backgroundColor: AppColors.darkRed,
