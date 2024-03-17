@@ -2,27 +2,28 @@ import 'package:flutter/material.dart';
 
 // Constants
 import 'package:flutter_cms_business_manager/common/constants/colors.dart';
+
+// Utils
 import 'package:flutter_cms_business_manager/common/utils/validators.dart';
-import 'package:flutter_cms_business_manager/common/widgets/custom_button.dart';
 
 // Widgets
-import 'package:flutter_cms_business_manager/screens/home/widgets/main_screen.dart';
+import 'package:flutter_cms_business_manager/common/widgets/custom_button.dart';
 import 'package:flutter_cms_business_manager/common/widgets/custom_textfield.dart';
 import 'package:flutter_cms_business_manager/common/widgets/snack_bar.dart';
+import 'package:flutter_cms_business_manager/screens/home/widgets/main_screen.dart';
 
 // Provider
 import 'package:flutter_cms_business_manager/services/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
-class UpdateEmail extends StatelessWidget {
-  const UpdateEmail({super.key});
+class UpdateName extends StatelessWidget {
+  const UpdateName({super.key});
 
   @override
   Widget build(BuildContext context) {
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-    final TextEditingController newEmailController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
+    final TextEditingController nameController = TextEditingController();
 
     final userProvider = Provider.of<UserProvider>(context, listen: false);
 
@@ -46,7 +47,7 @@ class UpdateEmail extends StatelessWidget {
           },
         ),
         title: const Text(
-          'Update Email',
+          'Update Name',
           style: TextStyle(
             fontSize: 20,
           ),
@@ -69,21 +70,11 @@ class UpdateEmail extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: CustomTextField(
-                controller: newEmailController,
-                hintText: 'Enter your new email',
-                validator: (value) => Validators.validatePassword(
-                  newEmailController.text,
+                controller: nameController,
+                hintText: 'Name',
+                validator: (value) => Validators.validateName(
+                  nameController.text,
                 ),
-              ),
-            ),
-            const SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: CustomTextField(
-                controller: passwordController,
-                hintText: 'Enter your password',
-                validator: (value) =>
-                    Validators.validatePassword(passwordController.text),
               ),
             ),
             const SizedBox(height: 32),
@@ -91,11 +82,8 @@ class UpdateEmail extends StatelessWidget {
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
                   try {
-                    await userProvider.updateEmail(
-                      newEmailController.text,
-                      passwordController.text,
-                    );
-                    CustomSnackBar.show(context, 'Email updated successfully',
+                    await userProvider.updateName(nameController.text);
+                    CustomSnackBar.show(context, 'Name updated successfully',
                         backgroundColor: AppColors.lightGreen,
                         textColor: AppColors.white);
 
@@ -109,13 +97,13 @@ class UpdateEmail extends StatelessWidget {
                       ),
                     );
                   } catch (e) {
-                    CustomSnackBar.show(context, 'Error updating email: $e',
+                    CustomSnackBar.show(context, 'Error updating name',
                         backgroundColor: AppColors.lightRed,
                         textColor: AppColors.white);
                   }
                 }
               },
-              text: 'Update Email',
+              text: 'Update Name',
               color: AppColors.primaryColor,
               textColor: AppColors.white,
             ),

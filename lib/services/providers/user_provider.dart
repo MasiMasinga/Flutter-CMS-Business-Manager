@@ -15,7 +15,7 @@ class UserProvider extends ChangeNotifier {
 
   Future<void> updateName(String name) async {}
 
-  Future<void> updateEmail(String email, String newEmail) async {}
+  Future<void> updateEmail(String newEmail, String password) async {}
 
   Future<void> updatePassword(String newPassword, String confirmNewPassword) async {}
 
