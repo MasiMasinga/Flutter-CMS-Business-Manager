@@ -21,7 +21,7 @@ class UpdateName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
     final TextEditingController nameController = TextEditingController();
 
@@ -54,7 +54,7 @@ class UpdateName extends StatelessWidget {
         ),
       ),
       body: Form(
-        key: _formKey,
+        key: formKey,
         child: Column(
           children: <Widget>[
             const Padding(
@@ -80,7 +80,7 @@ class UpdateName extends StatelessWidget {
             const SizedBox(height: 32),
             CustomButton(
               onPressed: () async {
-                if (_formKey.currentState!.validate()) {
+                if (formKey.currentState!.validate()) {
                   try {
                     await userProvider.updateName(nameController.text);
                     CustomSnackBar.show(context, 'Name updated successfully',

@@ -14,7 +14,6 @@ import 'package:flutter_cms_business_manager/common/widgets/snack_bar.dart';
 // Screens
 import 'package:flutter_cms_business_manager/screens/auth/forgot_password.dart';
 import 'package:flutter_cms_business_manager/screens/auth/register.dart';
-import 'package:flutter_cms_business_manager/screens/home/home.dart';
 import 'package:flutter_cms_business_manager/screens/home/widgets/main_screen.dart';
 
 // Provider

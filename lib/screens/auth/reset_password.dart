@@ -17,11 +17,11 @@ import 'package:provider/provider.dart';
 import 'package:flutter_cms_business_manager/services/providers/auth_provider.dart';
 
 class ResetPassword extends StatelessWidget {
-  ResetPassword({super.key});
+  const ResetPassword({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
     final TextEditingController newPasswordController = TextEditingController();
     final TextEditingController confirmNewPasswordController =
@@ -46,7 +46,7 @@ class ResetPassword extends StatelessWidget {
         ),
       ),
       body: Form(
-        key: _formKey,
+        key: formKey,
         child: Column(
           children: <Widget>[
             const Padding(
@@ -84,7 +84,7 @@ class ResetPassword extends StatelessWidget {
             const SizedBox(height: 32),
             CustomButton(
               onPressed: () async {
-                if (_formKey.currentState!.validate()) {
+                if (formKey.currentState!.validate()) {
                   try {
                     await authProvider.resetPassword(
                       newPasswordController.text,

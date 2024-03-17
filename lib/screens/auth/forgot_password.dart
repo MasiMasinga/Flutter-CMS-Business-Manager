@@ -20,11 +20,11 @@ import 'package:provider/provider.dart';
 import 'package:flutter_cms_business_manager/services/providers/auth_provider.dart';
 
 class ForgotPassword extends StatelessWidget {
-  ForgotPassword({super.key});
+  const ForgotPassword({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
     final TextEditingController emailController = TextEditingController();
 
@@ -54,7 +54,7 @@ class ForgotPassword extends StatelessWidget {
         ),
       ),
       body: Form(
-        key: _formKey,
+        key: formKey,
         child: Column(
           children: [
             const Padding(
@@ -81,7 +81,7 @@ class ForgotPassword extends StatelessWidget {
             const SizedBox(height: 32),
             CustomButton(
               onPressed: () async {
-                if (_formKey.currentState!.validate()) {
+                if (formKey.currentState!.validate()) {
                   try {
                     await authProvider.forgotPassword(emailController.text);
                     CustomSnackBar.show(
