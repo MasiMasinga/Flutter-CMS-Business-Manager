@@ -29,6 +29,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
       ],
       currentIndex: selectedIndex,
       selectedItemColor: AppColors.primaryColor,
+      selectedLabelStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
       onTap: onItemSelected,
     );
   }

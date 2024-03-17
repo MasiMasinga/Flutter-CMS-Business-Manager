@@ -115,7 +115,10 @@ class Login extends StatelessWidget {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const MainScreen(),
+                          builder: (context) => const MainScreen(
+                            initialIndex: 0,
+                            key: ValueKey("MainScreen"),
+                          ), 
                         ),
                       );
                     } catch (e) {
