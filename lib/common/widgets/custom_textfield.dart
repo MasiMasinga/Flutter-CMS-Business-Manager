@@ -12,7 +12,7 @@ class CustomTextField extends StatelessWidget {
   final FormFieldValidator<String>? validator;
 
   const CustomTextField({
-    Key? key,
+    super.key,
     required this.hintText,
     required this.controller,
     this.keyboardType = TextInputType.text,
@@ -22,7 +22,7 @@ class CustomTextField extends StatelessWidget {
     this.onChanged,
     this.borderColor = Colors.blue, // Default color is blue
     this.validator,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
