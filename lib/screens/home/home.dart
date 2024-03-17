@@ -38,10 +38,20 @@ class _HomeState extends State<Home> {
       body: ListView(
         children: <Widget>[
           ExpansionTile(
-            title: const Text('Department'),
+            tilePadding: const EdgeInsets.all(15),
+            title: const Text(
+              'Department',
+              style: TextStyle(
+                color: AppColors.primaryColor,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             children: <Widget>[
               ListTile(
-                title: const Text('Create New Department'),
+                title: const Text(
+                  'Create New Department',
+                  style: TextStyle(color: AppColors.lightBlue),
+                ),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -52,7 +62,12 @@ class _HomeState extends State<Home> {
                 },
               ),
               ListTile(
-                title: const Text('View Departments'),
+                title: const Text(
+                  'View Departments',
+                  style: TextStyle(
+                    color: AppColors.lightBlue,
+                  ),
+                ),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -65,10 +80,21 @@ class _HomeState extends State<Home> {
             ],
           ),
           ExpansionTile(
-            title: const Text('Role'),
+            title: const Text(
+              'Role',
+              style: TextStyle(
+                color: AppColors.darkOrange,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             children: <Widget>[
               ListTile(
-                title: const Text('Create Role'),
+                title: const Text(
+                  'Create Role',
+                  style: TextStyle(
+                    color: AppColors.lightOrange,
+                  ),
+                ),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -79,7 +105,12 @@ class _HomeState extends State<Home> {
                 },
               ),
               ListTile(
-                title: const Text('View Roles'),
+                title: const Text(
+                  'View Roles',
+                  style: TextStyle(
+                    color: AppColors.lightOrange,
+                  ),
+                ),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -92,10 +123,21 @@ class _HomeState extends State<Home> {
             ],
           ),
           ExpansionTile(
-            title: const Text('Employee'),
+            title: const Text(
+              'Employee',
+              style: TextStyle(
+                color: AppColors.darkPurple,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             children: <Widget>[
               ListTile(
-                title: const Text('Create Employee'),
+                title: const Text(
+                  'Create Employee',
+                  style: TextStyle(
+                    color: AppColors.lightPurple,
+                  ),
+                ),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -106,7 +148,12 @@ class _HomeState extends State<Home> {
                 },
               ),
               ListTile(
-                title: const Text('View Employees'),
+                title: const Text(
+                  'View Employees',
+                  style: TextStyle(
+                    color: AppColors.lightPurple,
+                  ),
+                ),
                 onTap: () {
                   Navigator.push(
                     context,
