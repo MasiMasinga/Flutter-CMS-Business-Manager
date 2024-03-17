@@ -32,9 +32,7 @@ class Settings extends StatelessWidget {
         ),
         title: const Text(
           'Settings',
-          style: TextStyle(
-            fontSize: 20,
-          ),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
       ),
       body: ListView(

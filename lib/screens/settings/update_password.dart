@@ -21,7 +21,7 @@ class UpdatePassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
     final TextEditingController currentPassword = TextEditingController();
     final TextEditingController newPassword = TextEditingController();
@@ -50,13 +50,11 @@ class UpdatePassword extends StatelessWidget {
         ),
         title: const Text(
           'Update Password',
-          style: TextStyle(
-            fontSize: 20,
-          ),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
       ),
       body: Form(
-        key: _formKey,
+        key: formKey,
         child: Column(
           children: <Widget>[
             const Padding(
@@ -105,7 +103,7 @@ class UpdatePassword extends StatelessWidget {
             const SizedBox(height: 32),
             CustomButton(
               onPressed: () async {
-                if (_formKey.currentState!.validate()) {
+                if (formKey.currentState!.validate()) {
                   try {
                     await userProvider.updatePassword(
                         currentPassword.text, newPassword.text);
