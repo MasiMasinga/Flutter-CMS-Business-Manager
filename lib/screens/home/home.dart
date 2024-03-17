@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+// Constants
+import 'package:flutter_cms_business_manager/common/constants/colors.dart';
+
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -20,8 +23,12 @@ class _HomeState extends State<Home> {
             fontSize: 20,
           ),
         ),
+        backgroundColor: AppColors.primaryColor,
+        titleTextStyle: const TextStyle(
+          color: AppColors.black,
+          fontSize: 20,
+        ),
       ),
     );
   }
 }
-

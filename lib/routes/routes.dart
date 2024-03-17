@@ -5,7 +5,7 @@ import 'package:flutter_cms_business_manager/screens/auth/forgot_password.dart';
 import 'package:flutter_cms_business_manager/screens/auth/login.dart';
 import 'package:flutter_cms_business_manager/screens/auth/register.dart';
 import 'package:flutter_cms_business_manager/screens/auth/reset_password.dart';
-import 'package:flutter_cms_business_manager/screens/home/home.dart';
+import 'package:flutter_cms_business_manager/screens/home/widgets/main_screen.dart';
 import 'package:flutter_cms_business_manager/screens/settings/settings.dart';
 import 'package:flutter_cms_business_manager/screens/settings/update_email.dart';
 import 'package:flutter_cms_business_manager/screens/settings/update_password.dart';
@@ -25,7 +25,7 @@ class AppRoutes {
       case '/forgot-password':
         return MaterialPageRoute(builder: (_) => ForgotPassword());
       case '/home':
-        return MaterialPageRoute(builder: (_) => const Home());
+        return MaterialPageRoute(builder: (_) => const MainScreen());
       case '/settings':
         return MaterialPageRoute(builder: (_) => const Settings());
       case '/update-email':

@@ -15,6 +15,7 @@ import 'package:flutter_cms_business_manager/common/widgets/snack_bar.dart';
 import 'package:flutter_cms_business_manager/screens/auth/forgot_password.dart';
 import 'package:flutter_cms_business_manager/screens/auth/register.dart';
 import 'package:flutter_cms_business_manager/screens/home/home.dart';
+import 'package:flutter_cms_business_manager/screens/home/widgets/main_screen.dart';
 
 // Provider
 import 'package:provider/provider.dart';
@@ -114,7 +115,7 @@ class Login extends StatelessWidget {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Home(),
+                          builder: (context) => const MainScreen(),
                         ),
                       );
                     } catch (e) {
