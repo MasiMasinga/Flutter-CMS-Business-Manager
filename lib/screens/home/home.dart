@@ -46,7 +46,8 @@ class _HomeState extends State<Home> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const CreateDepartment()),
+                      builder: (context) => const CreateDepartment(),
+                    ),
                   );
                 },
               ),
@@ -56,7 +57,8 @@ class _HomeState extends State<Home> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const ViewDepartments()),
+                      builder: (context) => const ViewDepartments(),
+                    ),
                   );
                 },
               ),
@@ -70,7 +72,9 @@ class _HomeState extends State<Home> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const CreateRole()),
+                    MaterialPageRoute(
+                      builder: (context) => const CreateRole(),
+                    ),
                   );
                 },
               ),
@@ -79,7 +83,9 @@ class _HomeState extends State<Home> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const ViewRoles()),
+                    MaterialPageRoute(
+                      builder: (context) => const ViewRoles(),
+                    ),
                   );
                 },
               ),
@@ -94,7 +100,8 @@ class _HomeState extends State<Home> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const CreateEmployee()),
+                      builder: (context) => const CreateEmployee(),
+                    ),
                   );
                 },
               ),
@@ -104,7 +111,8 @@ class _HomeState extends State<Home> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const ViewEmployees()),
+                      builder: (context) => const ViewEmployees(),
+                    ),
                   );
                 },
               ),
