@@ -49,6 +49,7 @@ class UpdateEmail extends StatelessWidget {
           'Update Email',
           style: TextStyle(
             fontSize: 20,
+                        fontWeight: FontWeight.bold
           ),
         ),
       ),

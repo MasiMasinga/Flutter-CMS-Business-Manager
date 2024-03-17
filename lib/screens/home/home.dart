@@ -21,6 +21,7 @@ class _HomeState extends State<Home> {
           'Home',
           style: TextStyle(
             fontSize: 20,
+            fontWeight: FontWeight.bold
           ),
         ),
         backgroundColor: AppColors.primaryColor,

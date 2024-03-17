@@ -36,9 +36,7 @@ class ForgotPassword extends StatelessWidget {
         centerTitle: true,
         title: const Text(
           'Forgot Password',
-          style: TextStyle(
-            fontSize: 20,
-          ),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),

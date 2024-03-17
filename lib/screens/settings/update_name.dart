@@ -48,9 +48,7 @@ class UpdateName extends StatelessWidget {
         ),
         title: const Text(
           'Update Name',
-          style: TextStyle(
-            fontSize: 20,
-          ),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
       ),
       body: Form(
