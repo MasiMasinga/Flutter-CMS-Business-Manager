@@ -13,6 +13,7 @@ import 'package:flutter_cms_business_manager/screens/auth/login.dart';
 // Providers
 import 'package:provider/provider.dart';
 import 'package:flutter_cms_business_manager/services/providers/auth_provider.dart';
+import 'package:flutter_cms_business_manager/services/providers/user_provider.dart';
 
 class Settings extends StatelessWidget {
   const Settings({super.key});
@@ -20,6 +21,7 @@ class Settings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
@@ -91,6 +93,24 @@ class Settings extends StatelessWidget {
               onTap: () {
                 authProvider.logout();
                 CustomSnackBar.show(context, 'Logged out successfully',
+                    backgroundColor: AppColors.lightGreen,
+                    textColor: AppColors.white);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => Login()),
+                );
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListTile(
+              leading: const Icon(Icons.delete),
+              title: const Text('Delete Account'),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () {
+                //  userProvider.deleteUser(user!.id);
+                CustomSnackBar.show(context, 'Account deleted successfully',
                     backgroundColor: AppColors.lightGreen,
                     textColor: AppColors.white);
                 Navigator.pushReplacement(

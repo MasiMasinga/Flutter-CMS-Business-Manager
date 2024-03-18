@@ -15,10 +15,14 @@ import 'dart:convert';
 
 class CMSProvider extends ChangeNotifier {
   List<Department> _department = [];
-  Role? _role;
+  List<Department> _departments = [];
+  List<Role> _roles = [];
+  List<Employee> _employees = [];
   Employee? _employee;
+  late Role _role;
 
   List<Department> get department => _department;
+  List<Role> get roles => _roles;
 
   String url = Api.baseUrl;
 
@@ -80,15 +84,16 @@ class CMSProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> getDepartments() async {
+  Future<List<Department>> getDepartments({String? name}) async {
     try {
       final response = await http.get(
-        Uri.parse('$url/cms/department'),
+        Uri.parse('$url/cms/department${name != null ? '?name=$name' : ''}'),
       );
 
       if (response.statusCode == 200) {
-        var list = jsonDecode(response.body) as List;
-        _department = list.map((item) => Department.fromJson(item)).toList();
+        final List<dynamic> departmentList = jsonDecode(response.body);
+        _departments =
+            departmentList.map((i) => Department.fromJson(i)).toList();
         notifyListeners();
       } else {
         throw Exception('Failed to get departments');
@@ -96,6 +101,8 @@ class CMSProvider extends ChangeNotifier {
     } catch (e) {
       throw Exception('Failed to get departments');
     }
+
+    return _departments;
   }
 
   Future<void> getDepartment(String id) async {
@@ -128,7 +135,7 @@ class CMSProvider extends ChangeNotifier {
       );
 
       if (response.statusCode == 201) {
-        _role = Role.fromJson(response.body as Map<String, dynamic>);
+        _roles.add(Role.fromJson(jsonDecode(response.body)));
         notifyListeners();
       } else {
         throw Exception('Failed to create role');
@@ -138,14 +145,15 @@ class CMSProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> getRoles() async {
+  Future<List<Role>> getRoles() async {
     try {
       final response = await http.get(
         Uri.parse('$url/cms/role'),
       );
 
       if (response.statusCode == 200) {
-        _role = Role.fromJson(response.body as Map<String, dynamic>);
+        final List<dynamic> roleList = jsonDecode(response.body);
+        _roles = roleList.map((i) => Role.fromJson(i)).toList();
         notifyListeners();
       } else {
         throw Exception('Failed to get roles');
@@ -153,6 +161,8 @@ class CMSProvider extends ChangeNotifier {
     } catch (e) {
       throw Exception('Failed to get roles');
     }
+
+    return _roles;
   }
 
   Future<void> getRole(String id) async {
@@ -162,7 +172,7 @@ class CMSProvider extends ChangeNotifier {
       );
 
       if (response.statusCode == 200) {
-        _role = Role.fromJson(response.body as Map<String, dynamic>);
+        _role = Role.fromJson(jsonDecode(response.body));
         notifyListeners();
       } else {
         throw Exception('Failed to get role');
@@ -235,14 +245,19 @@ class CMSProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> getEmployees() async {
+  Future<List<Employee>> getEmployees({String? role}) async {
     try {
       final response = await http.get(
         Uri.parse('$url/cms/employee'),
       );
 
       if (response.statusCode == 200) {
-        _employee = Employee.fromJson(response.body as Map<String, dynamic>);
+        final List<dynamic> employeeList = jsonDecode(response.body);
+        _employees = employeeList.map((i) => Employee.fromJson(i)).toList();
+        if (role != null) {
+          _employees =
+              _employees.where((employee) => employee.role == role).toList();
+        }
         notifyListeners();
       } else {
         throw Exception('Failed to get employees');
@@ -250,6 +265,8 @@ class CMSProvider extends ChangeNotifier {
     } catch (e) {
       throw Exception('Failed to get employees');
     }
+
+    return _employees;
   }
 
   Future<void> getEmployee(String id) async {

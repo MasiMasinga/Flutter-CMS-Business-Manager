@@ -6,7 +6,9 @@ import 'package:flutter_cms_business_manager/common/widgets/snack_bar.dart';
 
 // Widgets
 import 'package:flutter_cms_business_manager/screens/home/widgets/main_screen.dart';
+import 'package:flutter_cms_business_manager/services/models/department.dart';
 import 'package:flutter_cms_business_manager/services/models/employee.dart';
+import 'package:flutter_cms_business_manager/services/models/role.dart';
 
 // Provider
 import 'package:flutter_cms_business_manager/services/providers/cms_provider.dart';
@@ -20,23 +22,29 @@ class ViewEmployees extends StatefulWidget {
 }
 
 class _ViewEmployeesState extends State<ViewEmployees> {
+  String filterRole = 'All';
+  String filterDepartment = 'All';
+  List<Employee> employees = [];
+  List<Role> roles = [];
+  List<Department> departments = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchInitialData();
+  }
+
+  fetchInitialData() async {
+    final cmsProvider = Provider.of<CMSProvider>(context, listen: false);
+    employees = await cmsProvider.getEmployees();
+    roles = await cmsProvider.getRoles();
+    departments = await cmsProvider.getDepartments();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
-    String filterRole = 'All';
-    String filterDepartment = 'All';
-
-    List<Employee> employees = [
-      Employee(name: 'John Doe', role: 'Developer', department: 'IT'),
-      Employee(name: 'Jane Smith', role: 'Designer', department: 'Marketing'),
-      Employee(name: 'Bob Johnson', role: 'Manager', department: 'HR'),
-      Employee(name: 'Alice Williams', role: 'Developer', department: 'IT'),
-      Employee(
-          name: 'Charlie Brown', role: 'Designer', department: 'Marketing'),
-      Employee(name: 'David Davis', role: 'Manager', department: 'HR'),
-    ];
-
     final cmsProvider = Provider.of<CMSProvider>(context, listen: false);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Get Employees'),
@@ -63,81 +71,107 @@ class _ViewEmployeesState extends State<ViewEmployees> {
         ),
         actions: [
           PopupMenuButton<String>(
-            onSelected: (value) {
+            onSelected: (value) async {
               setState(() {
                 filterRole = value;
               });
+              employees = await cmsProvider.getEmployees(role: value);
             },
             itemBuilder: (context) {
-              return ['All', 'Developer', 'Designer'].map((String role) {
+              return roles.map((Role role) {
                 return PopupMenuItem<String>(
-                  value: role,
-                  child: Text('Role: $role'),
+                  value: role.jobTitle,
+                  child: Text('Role: ${role.jobTitle}'),
                 );
               }).toList();
             },
           ),
           PopupMenuButton<String>(
-            onSelected: (value) {
+            onSelected: (value) async {
               setState(() {
                 filterDepartment = value;
               });
+              departments = await cmsProvider.getDepartments(name: value);
             },
             itemBuilder: (context) {
-              return ['All', 'IT', 'HR'].map((String department) {
+              return departments.map((Department department) {
                 return PopupMenuItem<String>(
-                  value: department,
-                  child: Text('Department: $department'),
+                  value: department.name,
+                  child: Text('Department: ${department.name}'),
                 );
               }).toList();
             },
           ),
         ],
       ),
-      body: ListView(
-        children: employees.where((employee) {
-          return (filterRole == 'All' || employee.role == filterRole) &&
-              (filterDepartment == 'All' ||
-                  employee.department == filterDepartment);
-        }).map((employee) {
-          return ListTile(
-            title: Text(employee.name),
-            subtitle: Text(
-                'Role: ${employee.role}, Department: ${employee.department}'),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.edit),
-                  onPressed: () {},
+      body: FutureBuilder<List<Employee>>(
+        future: cmsProvider.getEmployees(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          } else if (snapshot.hasError) {
+            return const Scaffold(
+              body: Center(
+                child: Text(
+                  'An error occurred while fetching employees. Please try again.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 20),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.delete),
-                  onPressed: () {
-                    cmsProvider.deleteEmployee(employee as String);
-
-                    CustomSnackBar.show(
-                      context,
-                      'Employee Deleted Successfully',
-                      backgroundColor: AppColors.lightRed,
-                      textColor: AppColors.white,
-                    );
-
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const MainScreen(
-                          initialIndex: 0,
-                          key: ValueKey("MainScreen"),
-                        ),
+              ),
+            );
+          } else {
+            final employees = snapshot.data!;
+            return ListView(
+              children: employees.where((employee) {
+                return (filterRole == 'All' || employee.role == filterRole) &&
+                    (filterDepartment == 'All' ||
+                        employee.department == filterDepartment);
+              }).map((employee) {
+                return ListTile(
+                  title: Text(employee.name),
+                  subtitle: Text(
+                      'Role: ${employee.role}, Department: ${employee.department}'),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.edit),
+                        onPressed: () {},
                       ),
-                    );
-                  },
-                ),
-              ],
-            ),
-          );
-        }).toList(),
+                      IconButton(
+                        icon: const Icon(Icons.delete),
+                        onPressed: () {
+                          cmsProvider.deleteEmployee(employee.id);
+
+                          CustomSnackBar.show(
+                            context,
+                            'Employee Deleted Successfully',
+                            backgroundColor: AppColors.lightRed,
+                            textColor: AppColors.white,
+                          );
+
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const MainScreen(
+                                initialIndex: 0,
+                                key: ValueKey("MainScreen"),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              }).toList(),
+            );
+          }
+        },
       ),
     );
   }

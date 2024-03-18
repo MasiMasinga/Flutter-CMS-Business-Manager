@@ -81,11 +81,12 @@ class ViewDepartments extends StatelessWidget {
               ),
             ),
             body: const Center(
-                child: Text(
-              'An error occurred while fetching departments',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20),
-            )),
+              child: Text(
+                'An error occurred while fetching departments',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
           );
         } else {
           return Scaffold(
