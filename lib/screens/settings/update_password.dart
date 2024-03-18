@@ -16,6 +16,7 @@ import 'package:flutter_cms_business_manager/common/widgets/snack_bar.dart';
 import 'package:flutter_cms_business_manager/services/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
+
 class UpdatePassword extends StatelessWidget {
   const UpdatePassword({super.key});
 
@@ -28,6 +29,8 @@ class UpdatePassword extends StatelessWidget {
     final TextEditingController confirmNewPassword = TextEditingController();
 
     final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+    String userId = '';
 
     return Scaffold(
       appBar: AppBar(
@@ -106,7 +109,7 @@ class UpdatePassword extends StatelessWidget {
                 if (formKey.currentState!.validate()) {
                   try {
                     await userProvider.updatePassword(
-                        currentPassword.text, newPassword.text);
+                        userId, currentPassword.text, newPassword.text);
                     CustomSnackBar.show(
                         context, 'Password updated successfully',
                         backgroundColor: AppColors.lightGreen,

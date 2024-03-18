@@ -85,7 +85,7 @@ class Login extends StatelessWidget {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ForgotPassword(),
+                            builder: (context) => const ForgotPassword(),
                           ),
                         );
                       },
@@ -122,8 +122,8 @@ class Login extends StatelessWidget {
                       );
                     } catch (e) {
                       CustomSnackBar.show(context, 'Error logging in',
-                          backgroundColor: AppColors.darkGrey,
-                          textColor: AppColors.darkRed);
+                          backgroundColor: AppColors.darkRed,
+                          textColor: AppColors.white);
                     }
                   }
                 },

@@ -26,6 +26,8 @@ class UpdateEmail extends StatelessWidget {
 
     final userProvider = Provider.of<UserProvider>(context, listen: false);
 
+    String userId = '';
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -47,10 +49,7 @@ class UpdateEmail extends StatelessWidget {
         ),
         title: const Text(
           'Update Email',
-          style: TextStyle(
-            fontSize: 20,
-                        fontWeight: FontWeight.bold
-          ),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
       ),
       body: Form(
@@ -93,6 +92,7 @@ class UpdateEmail extends StatelessWidget {
                 if (formKey.currentState!.validate()) {
                   try {
                     await userProvider.updateEmail(
+                      userId,
                       newEmailController.text,
                       passwordController.text,
                     );

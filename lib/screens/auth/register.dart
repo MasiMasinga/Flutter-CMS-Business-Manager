@@ -103,10 +103,10 @@ class Register extends StatelessWidget {
               ),
               const SizedBox(height: 32),
               CustomButton(
-                onPressed: () async {
+                onPressed: () {
                   if (formKey.currentState!.validate()) {
                     try {
-                      await authProvider.createUser(
+                      authProvider.createUser(
                         nameController.text,
                         emailController.text,
                         passwordController.text,
@@ -124,8 +124,8 @@ class Register extends StatelessWidget {
                       );
                     } catch (e) {
                       CustomSnackBar.show(context, 'Error creating user',
-                          backgroundColor: AppColors.darkGrey,
-                          textColor: AppColors.darkRed);
+                          backgroundColor: AppColors.darkRed,
+                          textColor: AppColors.white);
                     }
                   }
                 },

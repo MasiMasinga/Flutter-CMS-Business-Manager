@@ -27,6 +27,8 @@ class UpdateName extends StatelessWidget {
 
     final userProvider = Provider.of<UserProvider>(context, listen: false);
 
+    String userId = '';
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -80,7 +82,7 @@ class UpdateName extends StatelessWidget {
               onPressed: () async {
                 if (formKey.currentState!.validate()) {
                   try {
-                    await userProvider.updateName(nameController.text);
+                    await userProvider.updateName(userId, nameController.text);
                     CustomSnackBar.show(context, 'Name updated successfully',
                         backgroundColor: AppColors.lightGreen,
                         textColor: AppColors.white);
